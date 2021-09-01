@@ -1,2 +1,2 @@
 # OTUS
-Advanced linux repo
+Advanced linux cource repo
