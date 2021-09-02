@@ -1,0 +1,148 @@
+Script started on 2021-09-02 09:25:56+00:00
+[root@server /]# exitzfs get compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[2Plscd /tmpzfs set compression=zle my/zlelzjb my/lzjb[2Pzle my/zle[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd /tmp[Kls[Kexitzfs get compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[Kexitzfs get compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[K[2Plscd /tmpzfs set compression=zle my/zlelzjb my/lzjb[2P4 my/lz4gzip my/gzip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[15Pcreate my/zlelzjb[1P4gzip[8Ppool list[6Pexitzfs get compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[Kzfs set compression=zle my/zlelzjb my/lzjb[2P4 my/lz4gzip my/gzip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[15Pcreate my/zlelzjb[1P4gzippool/gzip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[12Ppool list[K[K[K[K[K[K[K[K[K[Ktar zv[K[Kxvzf /r[Ktmp/zfs_task2[K1.ra[K[Ktar.ga[Kz
+zpoolexport/
+zpoolexport/filea
+zpoolexport/fileb
+[root@server /]# zpool import 0[Kp[K0-[K[K-d /zkl[K[Kpoolexpoer[K[Krt/ p[Kor[Ktus
+[root@server /]# zpll[K[Kool list
+NAME   SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+my    2.75G  26.8M  2.72G        -         -     0%     0%  1.00x    ONLINE  -
+otus   480M  2.18M   478M        -         -     0%     0%  1.00x    ONLINE  -
+[root@server /]# zpool status
+  pool: my
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	my          ONLINE       0     0     0
+	  raidz2-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: otus
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME                    STATE     READ WRITE CKSUM
+	otus                    ONLINE       0     0     0
+	  mirror-0              ONLINE       0     0     0
+	    /zpoolexport/filea  ONLINE       0     0     0
+	    /zpoolexport/fileb  ONLINE       0     0     0
+
+errors: No known data errors
+[root@server /]# zfs list
+NAME             USED  AVAIL     REFER  MOUNTPOINT
+my              8.88M   798M     27.9K  /my
+my/gzip         1.22M   798M     1.22M  /my/gzip
+my/lz4          1.99M   798M     1.99M  /my/lz4
+my/lzjb         2.37M   798M     2.37M  /my/lzjb
+my/zle          3.16M   798M     3.16M  /my/zle
+otus            2.04M   350M       24K  /otus
+otus/hometask2  1.88M   350M     1.88M  /otus/hometask2
+[root@server /]# zfs g[Kf[Kget compression, [Kcompt[Kressratio
+NAME            PROPERTY       VALUE     SOURCE
+my              compression    off       default
+my              compressratio  1.49x     -
+my/gzip         compression    gzip      local
+my/gzip         compressratio  2.69x     -
+my/lz4          compression    lz4       local
+my/lz4          compressratio  1.64x     -
+my/lzjb         compression    lzjb      local
+my/lzjb         compressratio  1.37x     -
+my/zle          compression    zle       local
+my/zle          compressratio  1.03x     -
+otus            compression    zle       local
+otus            compressratio  1.00x     -
+otus/hometask2  compression    zle       inherited from otus
+otus/hometask2  compressratio  1.00x     -
+[root@server /]# zg[Kh[Kfs f[Kget checksum
+NAME            PROPERTY  VALUE      SOURCE
+my              checksum  on         default
+my/gzip         checksum  on         default
+my/lz4          checksum  on         default
+my/lzjb         checksum  on         default
+my/zle          checksum  on         default
+otus            checksum  sha256     local
+otus/hometask2  checksum  sha256     inherited from otus
+[root@server /]# zg[K[Kzg[Kfs get all otus
+NAME  PROPERTY              VALUE                  SOURCE
+otus  type                  filesystem             -
+otus  creation              Fri May 15  4:00 2020  -
+otus  used                  2.04M                  -
+otus  available             350M                   -
+otus  referenced            24K                    -
+otus  compressratio         1.00x                  -
+otus  mounted               yes                    -
+otus  quota                 none                   default
+otus  reservation           none                   default
+otus  recordsize            128K                   local
+otus  mountpoint            /otus                  default
+otus  sharenfs              off                    default
+otus  checksum              sha256                 local
+otus  compression           zle                    local
+otus  atime                 on                     default
+otus  devices               on                     default
+otus  exec                  on                     default
+otus  setuid                on                     default
+otus  readonly              off                    default
+otus  zoned                 off                    default
+otus  snapdir               hidden                 default
+otus  aclinherit            restricted             default
+otus  createtxg             1                      -
+otus  canmount              on                     default
+otus  xattr                 on                     default
+otus  copies                1                      default
+otus  version               5                      -
+otus  utf8only              off                    -
+otus  normalization         none                   -
+otus  casesensitivity       sensitive              -
+otus  vscan                 off                    default
+otus  nbmand                off                    default
+otus  sharesmb              off                    default
+otus  refquota              none                   default
+otus  refreservation        none                   default
+otus  guid                  14592242904030363272   -
+otus  primarycache          all                    default
+otus  secondarycache        all                    default
+otus  usedbysnapshots       0B                     -
+otus  usedbydataset         24K                    -
+otus  usedbychildren        2.01M                  -
+otus  usedbyrefreservation  0B                     -
+otus  logbias               latency                default
+otus  objsetid              54                     -
+otus  dedup                 off                    default
+otus  mlslabel              none                   default
+otus  sync                  standard               default
+otus  dnodesize             legacy                 default
+otus  refcompressratio      1.00x                  -
+otus  written               24K                    -
+otus  logicalused           1020K                  -
+otus  logicalreferenced     12K                    -
+otus  volmode               default                default
+otus  filesystem_limit      none                   default
+otus  snapshot_limit        none                   default
+otus  filesystem_count      none                   default
+otus  snapshot_count        none                   default
+otus  snapdev               hidden                 default
+otus  acltype               off                    default
+otus  context               none                   default
+otus  fscontext             none                   default
+otus  defcontext            none                   default
+otus  rootcontext           none                   default
+otus  relatime              off                    default
+otus  redundant_metadata    all                    default
+otus  overlay               off                    default
+otus  encryption            off                    default
+otus  keylocation           none                   default
+otus  keyformat             none                   default
+otus  pbkdf2iters           0                      default
+otus  special_small_blocks  0                      default
+[root@server /]# exit
+exit
+
+Script done on 2021-09-02 09:35:15+00:00

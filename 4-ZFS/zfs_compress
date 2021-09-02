@@ -1,0 +1,17 @@
+Script started on 2021-09-02 08:19:22+00:00
+[root@server /]# exit[2Plscd /tmpzfs set compression=zle my/zlelzjb my/lzjb[2P4 my/lz4gzip my/gzip[2Plz4 my/lz4jb my/lzjb[2Pzle my/zle[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd /tmp[Kls[Kcd /tmpzfs set compression=zle my/zlelzjb my/lzjb[2P4 my/lz4gzip my/gzip[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[15Pcreate my/zlelzjb[1P4gzip[8Ppool list[6Pexitzfs get compression,compressratio[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[Kzfs get compression,compressratio
+NAME     PROPERTY       VALUE     SOURCE
+my       compression    off       default
+my       compressratio  1.49x     -
+my/gzip  compression    gzip      local
+my/gzip  compressratio  2.69x     -
+my/lz4   compression    lz4       local
+my/lz4   compressratio  1.64x     -
+my/lzjb  compression    lzjb      local
+my/lzjb  compressratio  1.37x     -
+my/zle   compression    zle       local
+my/zle   compressratio  1.03x     -
+[root@server /]# exit
+exit
+
+Script done on 2021-09-02 08:19:49+00:00
