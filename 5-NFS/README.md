@@ -1,3 +1,4 @@
-# OTUS_1
+# NFS
 
-vagrantfile для старта vagrant cloud box daniloveb/centos-7-9 с ядром 5
+vagrantfile для старта двух машин сервера и клиента
+Настройка осуществляется nfs_server и nfs_client соответсвенно 
