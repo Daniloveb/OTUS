@@ -3,8 +3,8 @@
 http://34.141.173.170/repo
 # Ссылка на репозиторий с пакетом nginx, скомпилированным с openssl 1.1.1l
 
-# Для доступа создайте файл /etc/yum.repos.d/otus.repo
-# с ссодержимым
+# Для доступа создайте файл /etc/yum.repos.d/otus.repo с содержимым
+  
 [otus]  
 name=otus-linux  
 baseurl=http://localhost/repo  
@@ -19,7 +19,7 @@ yum repolist enabled | grep otus
 
 
 
-# Для создания пакета используем данные команды
+# Для создания пакета были использована данные последовательность действий
 yum install -y redhat-lsb-core wget rpmdevtools rpm-build createrepo yum-utils openssl-devel  
 cd /root  
 # Скачиваем и устанавливаем пакеты с исходным кодом
