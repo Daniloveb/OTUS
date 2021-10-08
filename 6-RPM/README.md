@@ -19,7 +19,7 @@ yum repolist enabled | grep otus
 
 
 
-# Для создания пакета были использована данные последовательность действий
+# Для создания пакета были использована данная последовательность действий
 yum install -y redhat-lsb-core wget rpmdevtools rpm-build createrepo yum-utils openssl-devel  
 cd /root  
 # Скачиваем и устанавливаем пакеты с исходным кодом
