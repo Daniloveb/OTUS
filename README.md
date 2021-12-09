@@ -1,2 +1,2 @@
 # OTUS
-Advanced linux course repo
+Administrator Linux.Professional course repo
