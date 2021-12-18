@@ -5,14 +5,14 @@
 Создаем dockerfile, прикладываем новый index.html и config file.
 
 Собираем образ  
-'docker build -t daniloveb/nginx:v5 .'  
+`docker build -t daniloveb/nginx:v5 .`  
 запускаем  
-'docker run -d -p 8080:80 daniloveb/nginx:v5'  
+`docker run -d -p 8080:80 daniloveb/nginx:v5`  
 проверяем  
-'curl http://localhost:8080'  
+`curl http://localhost:8080`  
 Выкладываем в Docker hub  
-'docker login  
-docker push daniloveb/nginx:v5'  
+`docker login  
+docker push daniloveb/nginx:v5`  
 Путь к образу  
 https://hub.docker.com/repository/docker/daniloveb/nginx  
 
