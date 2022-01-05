@@ -6,7 +6,7 @@
 
 - Для предоставления права работать с докером необходимо создать файл с правилом https://github.com/Daniloveb/OTUS/blob/main/21-users/01-systemd-dockeruser.rules и скопировать в директорию /etc/polkit-1/rules.d/
 - Ограничения логина:
-Создаем группу admin и добавляем в нее root. скрипт.  
+Создаем группу admin и добавляем в нее root.
 Для использования механизма PAM -  создаем pam_script.sh  
 Добавляем строку о необходимости авторизации через PAM.  
 echo "auth  required  pam_script.so" >> /etc/pam.d/sshd  
