@@ -114,6 +114,20 @@ c7-test                    : ok=6    changed=5    unreachable=0    failed=0    s
 
 ```
 
+```
+[root@c7-test ~]# curl localhost:8080
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Hi nginx</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ ...
+</body>
+</html>[root@c7-test ~]#
+```
 
 
 
