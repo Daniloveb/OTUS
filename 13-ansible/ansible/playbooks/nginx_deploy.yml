@@ -1,0 +1,5 @@
+---
+- name: nginx role
+  hosts: c7-test
+  roles:
+    - nginx-test
