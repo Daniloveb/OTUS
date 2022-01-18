@@ -2,7 +2,7 @@
 
 Использовались два сервера 192.168.1.40 - ansible :сервер  
 192.168.1.97 c7-test  : клиент  
-Для авторизации копируем private_key в папку /opt/ansible/key/  
+Для авторизации создаем пару ключей и копируем private_key в папку /opt/ansible/key/  
 public key в ~/.ssd/authorized_keys на клиенте  
 
 ```
