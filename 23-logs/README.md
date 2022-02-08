@@ -23,12 +23,12 @@ elk
 ## Выполнение
 
 Виртуалки:
-###1. web:  192.168.1.201
+### 1. web:  192.168.1.201
 Установлен nginx и auditd
 Весь syslog уходит на 192.168.1.202
 Аудит конф. файла nginx так же уходит на 192.168.1.202 с помощью плагина rsyslog.
 
-###2. log: 192.168.1.202
+### 2. log: 192.168.1.202
 Установлен filebeat и настроен сервер rsyslog
 Используя шаблон, в конфигурации rsyslog, разбираем входящие логи по файлам приложений
 ```
@@ -36,7 +36,7 @@ $template RemoteLogs, "/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
 *.* ?RemoteLogs
 ```
 filebeat мониторит файлы nginx_access.log и nginx_error.log и отправляет на сервер elk
-###3. elk: 192.168.1.203
+### 3. elk: 192.168.1.203
 Установлены logstash, elasticsearch & kibana
 logstash принимает, разбирает сообщения и пересылает в DB.
 Скриншоты:
