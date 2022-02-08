@@ -1,0 +1,28 @@
+---
+- name: web
+  hosts: web
+  become: true
+
+  pre_tasks:
+  - name: Set_timezone
+    community.general.timezone:
+      name: Asia/Yekaterinburg
+
+  roles:
+    - role: web
+    - role: mc
+    - role: robertdebock.auditd
+      auditd_rules:
+      - file: /etc/nginx/nginx.conf
+        permissions:
+        - write
+        - attribute_change
+        keyname: audit_nginx_conf
+#  tasks:
+    #- name: Installs apache web server
+    #  apt: pkg=apache2 state=installed update_cache=true
+#    - name: create file
+#      file:
+#        path: /opt/foo.bar
+#        state: touch
+#        mode: '0644'

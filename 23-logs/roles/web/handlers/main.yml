@@ -1,0 +1,17 @@
+---
+# handlers file for web
+- name: restart_nginx
+  service:
+    name=nginx
+    state=restarted
+
+- name: restart_rsyslog
+  service:
+    name=rsyslog
+    state=restarted
+
+- name: restart_auditd
+  service:
+    name=auditd
+    state=restarted
+    use=service

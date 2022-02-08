@@ -1,0 +1,11 @@
+- name: Check all connections
+  hosts: all
+  tasks:
+    - name: Ping
+      ping:
+
+- name: Check specific connection to nodes
+  hosts: nodes
+  tasks:
+    - name: Ping
+      ping: 

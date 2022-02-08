@@ -1,0 +1,10 @@
+---
+- hosts: log
+  become: true
+  pre_tasks:
+   - name: Set_timezone
+     community.general.timezone:
+       name: Asia/Yekaterinburg
+  roles:
+    - role: log
+    - role: mc

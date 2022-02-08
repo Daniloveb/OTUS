@@ -1,0 +1,10 @@
+- hosts: all
+  become: yes
+  tasks:
+    #- name: Installs apache web server
+    #  apt: pkg=apache2 state=installed update_cache=true
+    - name: create file
+      file: 
+        path: /opt/foo.bar
+        state: touch
+        mode: '0644'

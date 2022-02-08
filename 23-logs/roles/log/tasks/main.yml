@@ -1,0 +1,53 @@
+---
+# tasks file for log
+- name: get apt repo key
+  ansible.builtin.apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+  when:
+    ansible_os_family == "Debian"
+
+- name: get rpm repo key
+  ansible.builtin.rpm_key:
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  when:
+    ansible_os_family == "RedHat"
+
+- name: install repo elastic yum
+  yum_repository:
+    name: elasticsearch_repo
+    description: elastic YUM repo
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    state: present
+#    filename: elastic-7.x.list
+  when:
+    ansible_os_family == "RedHat"
+
+- name: install repo elastic apt
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+    state: present
+    filename: elastic-7.x.list
+    update_cache: yes
+  when:
+    ansible_os_family == "Debian"
+
+- name: Install filebeat package
+  package:
+    name: filebeat
+    state: latest
+
+- name: Change rsyslog.conf
+  template:
+    src: rsyslog.conf
+    dest: /etc/rsyslog.conf
+  notify:
+    - restart_rsyslog
+
+- name: Change filebeat.yml
+  template:
+    src: filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+  notify:
+    - restart_filebeat
+

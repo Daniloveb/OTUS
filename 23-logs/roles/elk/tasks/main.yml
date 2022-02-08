@@ -1,0 +1,106 @@
+---
+# tasks file for elk
+- name: get apt repo key
+  ansible.builtin.apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+  when:
+    ansible_os_family == "Debian"
+
+- name: get rpm repo key
+  ansible.builtin.rpm_key:
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  when:
+    ansible_os_family == "RedHat"
+
+- name: install repo elastic yum
+  yum_repository:
+    name: elasticsearch_repo
+    description: elastic YUM repo
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    state: present
+#    filename: elastic-7.x.list
+  when:
+    ansible_os_family == "RedHat"
+
+- name: install repo elastic apt
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+    state: present
+    filename: elastic-7.x.list
+    update_cache: yes
+  when:
+    ansible_os_family == "Debian"
+
+- name: Install filebeat package
+  package:
+    name: filebeat
+    state: latest
+
+- name: install java
+  package:
+    name: java-11-openjdk-devel
+    state: present
+    update_cache: yes
+
+- name: Install logstash
+  package:
+    name: logstash
+    state: latest
+  notify:
+    - restart_logstash
+
+- name: Logstash input yaml
+  template:
+    src: 02-input.conf
+    dest: /etc/logstash/conf.d/02-input.conf
+  notify:
+    - restart_logstash
+
+- name: Logstash fiter yaml
+  template:
+    src: 10-filter.conf
+    dest: /etc/logstash/conf.d/10-filter.conf
+  notify:
+    - restart_logstash
+
+- name: Logstash output yaml
+  template:
+    src: 20-output.conf
+    dest: /etc/logstash/conf.d/20-output.conf
+  notify:
+    - restart_logstash
+
+- name: Install elasticsearch
+  package:
+    name: elasticsearch
+    state: latest
+  notify:
+    - restart_elasticsearch
+
+#- name: Update elastic.conf
+#  lineinfile:
+#    path: /etc/elasticsearch/elasticsearch.yml
+#    state: present
+#    line: "{{ item }}"
+#  with_items:
+#  - 'network.host: 0.0.0.0'
+#  - 'network.bind_host: 0.0.0.0'
+#  - 'network.publish_host: 0.0.0.0'
+#  - 'discovery.seed_hosts: ["0.0.0.0", "[::0]"]'
+
+- name: Install Kibana
+  package:
+    name: kibana
+    state: latest
+  notify:
+    - restart_kibana
+
+- name: Kibana set server.host
+  ansible.builtin.lineinfile:
+    path: /etc/kibana/kibana.yml
+    regexp: '^#server.host'
+    line: 'server.host: "192.168.1.203"'
+  notify:
+    - restart_kibana
+

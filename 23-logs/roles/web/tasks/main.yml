@@ -1,0 +1,52 @@
+---
+# tasks file for web
+- name: Install EPEL Repo
+  package:
+    name: epel-release
+    state: present
+
+- name: Install Nginx
+  package:
+    name: nginx
+    state: latest
+  notify:
+    - restart_nginx
+
+- name: Enable service Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Add nginx conf
+  template:
+     src: nginx.conf
+     dest: /etc/nginx/nginx.conf
+  notify:
+    - restart_nginx
+
+- name: Add rsyslog remote conf
+  template:
+     src: rsyslog_out.conf
+     dest: /etc/rsyslog.d/rsyslog_out.conf
+  notify:
+    - restart_rsyslog
+
+- name: Install audispd-plugins package
+  package:
+    name: audispd-plugins
+    state: latest
+
+- name: Add audisp syslog.conf
+  template:
+     src: syslog.conf
+     dest: /etc/audisp/plugins.d/syslog.conf
+  notify:
+    - restart_auditd
+
+- name: Add audisp-remote conf
+  template:
+     src: audisp-remote.conf
+     dest: /etc/audisp/audisp-remote.conf
+  notify:
+    - restart_auditd

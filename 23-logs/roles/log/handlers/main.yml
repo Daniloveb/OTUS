@@ -1,0 +1,12 @@
+---
+# handlers file for log
+- name: restart_rsyslog
+  service:
+    name=rsyslog
+    state=restarted
+
+- name: restart_filebeat
+  service:
+    name=filebeat
+    state=restarted
+

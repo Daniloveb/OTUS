@@ -1,0 +1,24 @@
+---
+- name: elk
+  hosts: elk
+  become: true
+  pre_tasks:
+    - name: Disable SELinux
+      ansible.posix.selinux:
+        state: disabled
+      when:
+        ansible_os_family == "RedHat"
+      notify:
+        - reboot
+    - name: Set_timezone
+      community.general.timezone:
+        name: Asia/Yekaterinburg
+
+  roles:
+    - role: elk
+    - role: mc
+
+  handlers:
+    - name: reboot
+      reboot:
+

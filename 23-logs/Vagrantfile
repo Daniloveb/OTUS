@@ -1,0 +1,80 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+  
+  #config.ssh.insert_key = false
+  config.vm.box = "centos/7"
+  
+ # config.vm.provider "virtualbox" do |vb|
+ #   # Display the VirtualBox GUI when booting the machine
+ #   vb.gui = true
+ #
+ #   # Customize the amount of memory on the VM:
+ #     vb.memory = "1024"
+ #     vb.cpus = 2
+ # end
+  
+  
+  # Ansible guests
+  #======================================
+  config.vm.define "web" do |machine|
+    machine.vm.network "public_network", ip: "192.168.1.201"
+    machine.vm.hostname = "web"
+    machine.vm.provider "virtualbox" do |vb|
+	vb.memory = "1024"
+	vb.cpus = 2
+    end
+    machine.vm.provision "ansible" do |ansible|
+	ansible.playbook = "playbook_web.yml"
+	ansible.inventory_path = "inventory.yml"
+	ansible.config_file = "ansible.cfg"
+	ansible.verbose = true
+    end
+  end
+
+  config.vm.define "log" do |machine|
+    machine.vm.network "public_network", ip: "192.168.1.202"
+    machine.vm.hostname = "log"
+    machine.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+        vb.cpus = 2
+    end
+    machine.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook_log.yml"
+        ansible.inventory_path = "inventory.yml"
+        ansible.config_file = "ansible.cfg"
+        ansible.verbose = true
+    end
+  end
+
+   config.vm.define "elk" do |machine|
+     machine.vm.network "public_network", ip: "192.168.1.203"
+     machine.vm.hostname = "elk"
+     machine.vm.provider "virtualbox" do |vb|
+         vb.memory = "4096"
+         vb.cpus = 2
+     end
+     machine.vm.provision "ansible" do |ansible|
+       ansible.playbook = "playbook_elk.yml"
+       ansible.inventory_path = "inventory.yml"
+       ansible.config_file = "ansible.cfg"
+       ansible.verbose = true
+      # ansible.limit   = "nodes"
+     end
+   end
+
+
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+end
