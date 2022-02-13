@@ -79,15 +79,13 @@ Feb 13 05:52:02 sys systemd: Starting My log service...
 Feb 13 05:52:02 sys root: teak
 Feb 13 05:52:02 sys root: Sun Feb 13 05:52:02 UTC 2022: alert
 Feb 13 05:52:02 sys systemd: Started My log service.
-Feb 13 05:52:02 sys systemd: Starting Cleanup of Temporary Directories...
-Feb 13 05:52:02 sys systemd: Started Cleanup of Temporary Directories.
 Feb 13 05:53:12 sys systemd: Starting My log service...
 Feb 13 05:53:12 sys root: teak
 Feb 13 05:53:12 sys root: Sun Feb 13 05:53:12 UTC 2022: alert
 Feb 13 05:53:12 sys systemd: Started My log service.
 ```
 
-###2. Из репозитория epel установить spawn-fcgi и переписать init-скрипт на unit-файл (имя service должно называться так же: spawn-fcgi).
+### 2. Из репозитория epel установить spawn-fcgi и переписать init-скрипт на unit-файл (имя service должно называться так же: spawn-fcgi).
 
 ```
 yum install epel-release -y && yum install spawn-fcgi php php-cli mod_fcgid httpd -y
@@ -170,7 +168,7 @@ Feb 13 06:09:02 sys systemd[1]: Started spawn-fcgi.
 ```
     
 
-###3. Дополнить unit-файл httpd (он же apache) возможностью запустить несколько инстансов сервера с разными конфигурационными файлами.
+### 3. Дополнить unit-файл httpd (он же apache) возможностью запустить несколько инстансов сервера с разными конфигурационными файлами.
 
 Используем шаблон сервиса. Наличие '@' в имени сервиса (перед точкой) указывает на то, что это шаблон.
 Ссылку на конф. кодируем через instance name - %I
