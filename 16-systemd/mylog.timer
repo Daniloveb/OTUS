@@ -1,0 +1,10 @@
+[Unit]
+Description=Run mylog script every 30 second
+
+[Timer]
+# Run every 30 second
+OnUnitActiveSec=30
+Unit=mylog.service
+
+[Install]
+WantedBy=timer.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=My log service
+Wants=mylog.timer
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/sysconfig/mylog.conf
+ExecStart=/opt/eye.sh $marker $log
