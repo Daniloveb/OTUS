@@ -1,0 +1,85 @@
+---
+# tasks file for server
+- name: Create a new ext4 primary partition
+  community.general.parted:
+    device: /dev/sdb
+    number: 1
+    state: present
+
+- name: Create a ext4 filesystem on /dev/sdb1
+  community.general.filesystem:
+    fstype: ext4
+    dev: /dev/sdb1
+    state: present
+
+- name: Create a directory for backup
+  ansible.builtin.file:
+    path: /var/backup
+    state: directory
+    mode: '0755'
+
+- name: Mount backup disk
+  ansible.posix.mount:
+    path: /var/backup
+    src: /dev/sdb1
+    fstype: ext4
+    opts: nodev
+    state: mounted
+
+- name: Install EPEL
+  package:
+     name: epel-release
+     state: present
+
+- name: Install borgbackup
+  package:
+     name: borgbackup
+     state: present
+
+- name: Add the user borguser
+  ansible.builtin.user:
+    name: borguser
+    comment: borg backup user
+    password: "P@ssw0rd"
+
+- name: borguser folder owner
+  ansible.builtin.file:
+    path: /var/backup
+    owner: borguser
+    group: borguser
+
+- name: Create a directory ssh key
+  ansible.builtin.file:
+    path: /home/borguser/.ssh
+    state: directory
+    mode: '0700'
+
+- name: Touch a file key
+  ansible.builtin.file:
+    path: /home/borguser/.ssh/authorized_keys
+    state: touch
+    mode: '0600'
+
+- name: Set authorized key
+  ansible.posix.authorized_key:
+    user: borguser
+    state: present
+    key: "{{ lookup('file', '/vagrant/keys/id_rsa.pub') }}"
+
+#- name: Copy pub key borguser
+#  ansible.builtin.copy:
+#    src: /vagrant/keys/
+#    dest: /etc/foo.conf
+#    owner: foo
+#    group: foo
+#    mode: '0644'
+
+#- name: Enable ssh password login
+#  lineinfile:
+#      path: /etc/ssh/sshd_config
+#      regexp: "^PasswordAuthentication no"
+#      line: "PasswordAuthentication yes"
+#   notify:
+#      - restart_sshd
+
+

@@ -1,0 +1,6 @@
+---
+# handlers file for server
+- name: restart_sshd
+  service:
+    name: shd
+    state: restarted

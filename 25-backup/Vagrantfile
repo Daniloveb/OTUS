@@ -1,0 +1,55 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+file_disk = '/tmp/sata.vdi'
+
+Vagrant.configure("2") do |config|
+  
+  #config.ssh.insert_key = false
+  config.vm.box = "centos/7"
+
+  # Ansible guests
+  #======================================
+  config.vm.define "server" do |machine|
+    machine.vm.network "public_network", ip: "192.168.1.201"
+    machine.vm.hostname = "server"
+    machine.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.cpus = 2
+    needsController = false
+      unless File.exist?('file_disk')
+        vb.customize ['createhd', '--filename', file_disk, '--variant', 'Fixed', '--size', 2000]
+        needsController =  true
+#        vb.customize ["storagectl", :id, "--name", "SATA", "--add", "sata" ]
+#        vb.customize ['storageattach', :id,  '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_disk]
+      end
+      if needsController == true
+             vb.customize ["storagectl", :id, "--name", "SATA", "--add", "sata" ]
+             vb.customize ['storageattach', :id,  '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_disk]
+      end
+
+    end
+    machine.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook_server.yml"
+        ansible.inventory_path = "inventory.yml"
+        ansible.config_file = "ansible.cfg"
+        ansible.verbose = true
+    end
+  end
+
+  config.vm.define "client" do |machine|
+    machine.vm.network "public_network", ip: "192.168.1.202"
+    machine.vm.hostname = "client"
+    machine.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.cpus = 2
+    end
+    machine.vm.provision "ansible" do |ansible|
+        ansible.playbook = "playbook_client.yml"
+        ansible.inventory_path = "inventory.yml"
+        ansible.config_file = "ansible.cfg"
+        ansible.verbose = true
+    end
+  end
+
+
+end

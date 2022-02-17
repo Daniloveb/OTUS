@@ -1,0 +1,6 @@
+---
+# tasks file for web
+- name: Install MC
+  package:
+    name: mc
+    state: latest
