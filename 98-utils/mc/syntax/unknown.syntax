@@ -1,0 +1,34 @@
+context default
+    spellcheck
+
+keyword whole do yellow
+keyword whole end yellow
+keyword #*\n brightred
+keyword {{*}} brightred
+keyword whole linestart # green
+
+#Operators
+
+    keyword > yellow
+    keyword < yellow
+    keyword - yellow
+    keyword \+ yellow
+    keyword \* yellow
+    keyword / yellow
+    keyword % yellow
+    keyword = yellow
+    keyword \+= yellow
+    keyword -= yellow
+    keyword == yellow
+    keyword != yellow
+    keyword === yellow
+    keyword <=> yellow
+    keyword ! yellow
+    keyword ~ yellow
+    keyword =~ yellow
+    keyword & yellow
+    keyword | yellow
+    keyword .. yellow
+    keyword : yellow
+
+

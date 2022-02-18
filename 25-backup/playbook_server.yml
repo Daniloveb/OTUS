@@ -6,5 +6,5 @@
      community.general.timezone:
        name: Asia/Yekaterinburg
   roles:
+    - role: pre
     - role: server
-    - role: mc
