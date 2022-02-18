@@ -8,5 +8,3 @@ client      ansible_host=192.168.1.202 ansible_ssh_private_key_file=/vagrant/.va
 #ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_user=vagrant
 #ansible_ssh_private_key_file=/ansible/insecure_private_key
-#log_server_ip: 192.168.1.202
-#elk_server_ip: 192.168.1.203
