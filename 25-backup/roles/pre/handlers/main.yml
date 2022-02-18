@@ -1,2 +1,6 @@
 ---
 # handlers file for pre
+- name: restart_sshd
+  service:
+    name: sshd
+    state: restarted

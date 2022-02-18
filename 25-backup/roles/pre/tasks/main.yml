@@ -1,2 +1,16 @@
 ---
 # tasks file for pre
+- name: Install EPEL
+  package:
+     name: epel-release
+     state: present
+
+- name: Install MC
+  package:
+    name: mc
+    state: latest
+
+- name: Install borgbackup
+  package:
+     name: borgbackup
+     state: present

@@ -1,26 +1,38 @@
 ---
 - hosts: server
   become: true
+  tasks:
+  - name: Add the user borguser
+    ansible.builtin.user:
+      name: borguser
+      comment: borg backup user
+      password: "{{ 'pass' | password_hash('sha512') }}"
 
-- name: Add the user borg
-  ansible.builtin.user:
-    name: borg
-    comment: borg backup user
+  - name: Enable ssh password login
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp:        "^PasswordAuthentication no"
+      line:          "PasswordAuthentication yes"
 
-- name: borg folder owner
-  ansible.builtin.file:
-    path: /var/backup
-    owner: borg
+  - name: Restart sshd
+    ansible.builtin.systemd:
+      state: restarted
+      name: sshd
 
-- name: Create a directory ssh key
-  ansible.builtin.file:
-    path: /home/borg
-    state: directory
-    mode: '0700'
+#- name: borg folder owner
+#  ansible.builtin.file:
+#    path: /var/backup
+#    owner: borg
 
-- name: Touch a file key
-  ansible.builtin.file:
-    path: /home/borg/.ssh/authorized_keys
-    state: touch
-    mode: '0600'
+#- name: Create a directory ssh key
+#  ansible.builtin.file:
+#    path: /home/borg
+#    state: directory
+#    mode: '0700'
+
+#- name: Touch a file key
+#  ansible.builtin.file:
+#    path: /home/borg/.ssh/authorized_keys
+#    state: touch
+#    mode: '0600'
 
